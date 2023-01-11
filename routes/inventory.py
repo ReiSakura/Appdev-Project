@@ -20,6 +20,8 @@ images = UploadSet(f"shop", IMAGES, default_dest="shop")
 headings = ["Image Name", "Name", "Category", "Description",
             "Quantity", "Price", "Product ID", "Delete", "Modify"]
 
+localpath = os.getcwd()
+
 
 class productForm(FlaskForm):
     '''
@@ -71,6 +73,7 @@ def get_inventory():
     form = quantityForm()
     #statTable = update_db()
     #products = displayProduct(statTable["restockMinimum"])
+
     return render_template('inventory.html', headings=headings, data=dbtable.rows, form=form)
 
 
