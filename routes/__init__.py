@@ -22,6 +22,14 @@ app = Flask(
 # Note just change the secret key by abit to clear all session contents
 app.config["SECRET_KEY"] = "mysuperdupersecrethash365tothepowerof369andadditionosfthesecretmatrix420keanureevesss"
 
+# Produict image validations
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif']
+app.config['UPLOADED_SHOP_DEST'] = os.path.join(localpath, 'static/shop')
+
+shopphotos = UploadSet("shop", IMAGES)
+configure_uploads(app, shopphotos)
+
 # Register blueprint for your routes
 app.register_blueprint(inventory, url_prefix="/inventory")
 

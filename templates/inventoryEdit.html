@@ -1,0 +1,33 @@
+<!-- Made by jenson-->
+{% extends "adminBase.html" %}
+{% from "includes/_formHelper.html" import render_field %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data" action="">
+  {{ form.csrf_token }}
+  <div class="form-group">
+      {{ render_field(form.name, class="form-control", value=product["name"]) }}
+    </div>
+    <div class="form-group">
+      <select name="category">
+        <option value="{{ product["category"] }}">{{ product["category"] }}</option>
+        {% for value in category %}
+            <option value="{{ value }}"> {{ value }} </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <textarea name="description" cols="30" rows="10">{{ product["description"] }}</textarea>
+    </div>
+    <div class="form-group">
+      {{ render_field(form.quantity, class="form-control", value=product["quantity"]) }}
+    </div>
+    <div class="form-group">
+      {{ render_field(form.price, class="form-control", value=product["price"]) }}
+    </div>
+    <div class="form-group">
+      {{ image.image }}
+    </div>
+    <input type="submit" value="Submit" class="btn btn-success mt-2">
+</form>
+{% endblock %}
