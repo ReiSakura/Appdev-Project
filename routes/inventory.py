@@ -18,8 +18,8 @@ inventory = Blueprint("inventory", __name__, static_folder=os.path.join(
 images = UploadSet(f"shop", IMAGES, default_dest="shop")
 
 # Table display for page
-headings = ["Image Name", "Name", "Category", "Description",
-            "Quantity", "Price", "Product ID", "Delete", "Modify"]
+headings = ["Image", "Name", "Category", "Description",
+            "Quantity", "Price", "Product ID", "Delete", "Update"]
 
 localpath = os.getcwd()
 
@@ -30,21 +30,15 @@ class productForm(FlaskForm):
     '''
     # FileField('images', validators=[FileRequired()])
     image = FileField('images', validators=[InputRequired()])
-<<<<<<< HEAD
     name = StringField('Product Name', [validators.Length(min=1, max=30)])
     category = SelectField('Category', choices=[('Neckwear', 'Neckwear'), (
         'Earwear', 'Earwear'), ('Handwear', 'Handwear')], default='Neckwear')
-=======
-    name = StringField('Product Name', [validators.Length(min=1, max=25)])
-    category = SelectField('Category', choices=[('Fruits', 'Fruits'), ('Vegetable', 'Vegetable'), (
-        'Meat', 'Meat'), ('CannedFood', 'CannedFood'), ('CleaningProducts', 'CleaningProducts')], default='F')
->>>>>>> parent of 7e7ec04 (prog review draft1-inv)
     description = TextAreaField(
         u'Description', [validators.optional(), validators.length(max=200)])
     quantity = IntegerField(
-        'Quantity', [validators.NumberRange(min=1, max=99999)])
+        'Quantity', [validators.NumberRange(min=1, max=999)])
     price = IntegerField('Price (In Cents)', [
-                         validators.NumberRange(min=1, max=99999)])
+                         validators.NumberRange(min=1, max=9999999)])
     addSubmit = SubmitField('Submit')
 
 
@@ -144,8 +138,7 @@ def edit_inventory(id):
     '''
     Edit Page
     '''
-    categories = ['Fruits', 'Vegetable', 'Meat',
-                  'CannedFood', 'CleaningProducts']
+    categories = ['Neckwear', 'Earwear', 'Handwear']
     form = productForm()
 
     image = imageForm()

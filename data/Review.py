@@ -21,9 +21,6 @@ class Review():
     def get_gender(self):
         return self.__gender
 
-    def get_rating(self):
-        return self.__rating
-
     def get_remarks(self):
         return self.__remarks
 
@@ -37,9 +34,6 @@ class Review():
 
     def set_gender(self, gender):
         self.__gender = gender
-
-    def set_rating(self, rating):
-        self.__rating = rating
 
     def set_remarks(self, remarks):
         self.__remarks = remarks
