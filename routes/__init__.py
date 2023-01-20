@@ -3,6 +3,7 @@
 # from routes.{python-file} import {variable}
 # Import routes here
 from routes.inventory import inventory
+from routes.review import review
 from .database import db
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from uuid import UUID
@@ -36,7 +37,7 @@ configure_uploads(app, shopphotos)
 
 # Register blueprint for your routes
 app.register_blueprint(inventory, url_prefix="/inventory")
-
+app.register_blueprint(review, url_prefix="/review")
 
 @app.route("/", methods=["GET"])
 def home():
