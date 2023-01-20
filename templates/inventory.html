@@ -50,20 +50,20 @@
       <tbody>
         {% for row in data %}
           <tr>
-                  <td> <img src="../static/shop/{{ row.imagename }}" style="width: 100px; height: 100px;"> </td>
-                  <td> {{ row.name }} </td>
-                  <td> {{ row.category }} </td>
-                  <td> {{ row.description }} </td>
-                  <td> {{ row.quantity }} </td>
-                  <td> {{ row.price }} </td>
-                  <td> {{ row.id }} </td>
+            {% for key, value in row.items() %}
+              {% if key == "imagename" %}
+                  <td> <img src="../static/shop/{{ value }}" style="width: 100px; height: 100px;"> </td>
+              {% else %}
+                  <td> {{ value }} </td>
+              {% endif %}
+            {% endfor %}
             <td>
-              <form method="POST" action="http://127.0.0.1:5000/inventory/{{row.id }}">
+              <form method="POST" action="http://127.0.0.1:5000/inventory/{{loop.index - 1 }}">
                   <button value="submit" class="btn btn-danger">Delete</button>
               </form>
             </td>
             <td>
-                <a href="http://127.0.0.1:5000/inventory/edit/{{ row.id }}" class="btn btn-success"> Edit</a>
+                <a href="http://127.0.0.1:5000/inventory/edit/{{loop.index - 1 }}" class="btn btn-success"> Edit</a>
             </td>
           </tr>
         {% endfor %}
