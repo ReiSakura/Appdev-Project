@@ -4,7 +4,8 @@
 # Import routes here
 from routes.inventory import inventory
 from routes.announcements import announcements
-
+from routes.feedback import feedback
+from routes.review import review
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from uuid import UUID
 import time
@@ -33,6 +34,8 @@ configure_uploads(app, shopphotos)
 # Register blueprint for your routes
 app.register_blueprint(inventory, url_prefix="/inventory")
 app.register_blueprint(announcements, url_prefix="/announcements")
+app.register_blueprint(feedback, url_prefix="/feedback")
+app.register_blueprint(review, url_prefix="/review")
 
 @app.route("/", methods=["GET"])
 def home():

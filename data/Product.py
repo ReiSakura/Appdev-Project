@@ -11,7 +11,7 @@ class Product():
         self.__price = price
         self.__uuid = uuid.uuid4()
 
-    # Setters
+    # Getters
     def getName(self):
         return self.__name
 
@@ -27,7 +27,7 @@ class Product():
     def getuuid(self):
         return self.__uuid
 
-    # Getters
+    # Setters
     def setName(self, name):
         self.__name = name
 

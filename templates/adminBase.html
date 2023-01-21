@@ -39,9 +39,11 @@
         </style>
     </head>
     <body>
+        {% block navbar %}
+            {% include 'includes/_navbar.html' %}
+        {% endblock %}
         <!-- Page Wrapper -->
         <div id="wrapper">
-            {% block navbar %} {% endblock %}
 
             <!-- Page Wrapper -->
 

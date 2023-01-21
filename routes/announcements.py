@@ -1,9 +1,6 @@
 import uuid
 from flask import Blueprint, render_template, request, redirect, url_for, abort, flash, send_from_directory, escape
-from data.database import Database
-from data.table import Table
 from data.Announcement import Announcement
-from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import Form, StringField, TextAreaField, validators, FileField, IntegerField, SelectField, SubmitField
 from wtforms.validators import InputRequired
@@ -24,7 +21,7 @@ class CreateAnnouncementForm(Form):
     picture = FileField(label="Upload Image", validators=[FileAllowed(['jpg','png'])])
 
 
-@ announcements.route('/create', methods=['GET', 'POST'])
+@ announcements.route('/createAnnouncement', methods=['GET', 'POST'])
 def create_announcements():
     '''
     Add announcements page
@@ -53,7 +50,7 @@ def create_announcements():
         return redirect(url_for('announcements.retrieve_announcements'))
     return render_template('createAnnouncement.html', form=create_announcement_form)
 
-@ announcements.route('/')
+@ announcements.route('/retrieveAnnouncement')
 def retrieve_announcements():
     '''
     Retrieve data in announcements

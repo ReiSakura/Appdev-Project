@@ -1,0 +1,83 @@
+
+{% extends "adminBase.html" %}
+{% block title %}Feedback Storage System - Feedback{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<h1 class="display-4">Feedback Statistics - Table</h1>
+<a href = 'StatGraph'><button type="button" class="btn btn-primary">View Graphical Statistics</button></a>
+
+
+<div>
+    {% if count == 0 %}
+    <p>Total Feedback: None</p>
+    {% elif count == 1 %}
+    <p>Total Feedback : 1</p>
+    {% else %}
+    <p>Total Feedback : {{ count }}</p>
+    {% endif %}
+</div>
+
+    <table class = 'table table-striped'>
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>Feedback Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>January :</td>
+            <td>{{ jancount }}</td>
+        </tr>
+        <tr>
+            <td>February :</td>
+            <td>{{ febcount }}</td>
+        </tr>
+        <tr>
+            <td>March :</td>
+            <td>{{ marcount }}</td>
+        </tr>
+        <tr>
+            <td>April :</td>
+            <td>{{ aprcount }}</td>
+        </tr>
+        <tr>
+            <td>May :</td>
+            <td>{{ maycount }}</td>
+        </tr>
+        <tr>
+            <td>June :</td>
+            <td>{{ juncount }}</td>
+        </tr>
+        <tr>
+            <td>July :</td>
+            <td>{{ julcount }}</td>
+        </tr>
+        <tr>
+            <td>August :</td>
+            <td>{{ augcount }}</td>
+        </tr>
+        <tr>
+            <td>September :</td>
+            <td>{{ sepcount }}</td>
+        </tr>
+        <tr>
+            <td>October :</td>
+            <td>{{ octcount }}</td>
+        </tr>
+        <tr>
+            <td>November :</td>
+            <td>{{ novcount }}</td>
+        </tr>
+        <tr>
+            <td>December :</td>
+            <td>{{ deccount }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+{% endblock %}
