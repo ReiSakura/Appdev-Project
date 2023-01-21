@@ -30,9 +30,9 @@
         <td>{{ announcement.get_announcement_id() }}</td>
         <td>{{ announcement.get_title() }}</td>
         <td>{{ announcement.get_content() }}</td>
-        <td><a href="/updateAnnouncement/{{announcement.get_announcement_id()}}" class="btn btn-warning">Update</a></td>
+        <td><a href="/announcements/edit/{{announcement.get_announcement_id()}}" class="btn btn-warning">Update</a></td>
         <td>
-          <form action="{{url_for('delete_announcement', id=announcement.get_announcement_id())}}" method="POST">
+          <form action="{{url_for('announcements.delete_announcement', id=announcement.get_announcement_id())}}" method="POST">
             <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{announcement.get_title()}}?');">
           </form>
         </td>

@@ -20,14 +20,9 @@ announcements = Blueprint("announcements", __name__, static_folder=os.path.join(
 
 class CreateAnnouncementForm(Form):
     title = StringField('Title', [validators.Length(min=1, max=200), validators.DataRequired()])
-    content = StringField('Title', [validators.Length(min=1, max=200), validators.DataRequired()])
+    content = StringField('Content', [validators.Length(min=1, max=200), validators.DataRequired()])
     picture = FileField(label="Upload Image", validators=[FileAllowed(['jpg','png'])])
 
-
-@ announcements.route('/', methods=['GET', 'POST'])
-def get_announcements():
-
-    return "hi"
 
 @ announcements.route('/create', methods=['GET', 'POST'])
 def create_announcements():
@@ -47,16 +42,18 @@ def create_announcements():
         except:
             print("Error in retrieving Announcements from announcement.db.")
 
-        announcement = Announcement.Announcement(create_announcement_form.title.data, create_announcement_form.content.data)
+        announcement = Announcement(create_announcement_form.title.data, create_announcement_form.content.data)
         announcements_dict[announcement.get_announcement_id()] = announcement
+
+        print(announcements_dict)
         db['Announcements'] = announcements_dict
 
         db.close()
 
-        return redirect(url_for('retrieve_announcement'))
+        return redirect(url_for('announcements.retrieve_announcements'))
     return render_template('createAnnouncement.html', form=create_announcement_form)
 
-@ announcements.route('/retrieve')
+@ announcements.route('/')
 def retrieve_announcements():
     '''
     Retrieve data in announcements
@@ -73,7 +70,7 @@ def retrieve_announcements():
 
     return render_template('retrieveAnnouncement.html', count=len(announcements_list), announcements_list=announcements_list)
 
-@ announcements.route('/edit/<int:id>/', methods=['GET', 'POST'])
+@ announcements.route('/edit/<uuid:id>/', methods=['GET', 'POST'])
 def update_announcement(id):
     '''
     Edit page
@@ -85,13 +82,13 @@ def update_announcement(id):
         announcements_dict = db['Announcements']
 
         announcement = announcements_dict.get(id)
-        update_announcement_form.title.data = announcement.get_title()
-        update_announcement_form.content.data = announcement.get_content()
+        announcement.set_title(update_announcement_form.title.data)
+        announcement.set_content(update_announcement_form.content.data)
 
         db['Announcements'] = announcements_dict
         db.close()
 
-        return redirect(url_for('retrieve_announcement'))
+        return redirect(url_for('announcements.retrieve_announcements'))
     else:
         announcements_dict = {}
         db = shelve.open('announcement.db', 'r')
@@ -104,7 +101,7 @@ def update_announcement(id):
 
         return render_template('updateAnnouncement.html', form=update_announcement_form)
 
-@ announcements.route('/<int:id>', methods=['POST'])
+@ announcements.route('/<uuid:id>', methods=['POST'])
 def delete_announcement(id):
     '''
     Delete data in announcement based on id
@@ -118,4 +115,4 @@ def delete_announcement(id):
     db['Announcements'] = announcements_dict
     db.close()
 
-    return redirect(url_for('retrieve_announcement'))
+    return redirect(url_for('announcements.retrieve_announcements'))

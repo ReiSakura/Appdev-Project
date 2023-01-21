@@ -5,7 +5,7 @@ class Announcement:
     def __init__(self, title, content):
         self.__title = title
         self.__content = content
-        self.__announcement_id = uuid
+        self.__announcement_id = uuid.uuid4()
 
     # Getters and setters
     def get_announcement_id(self):
