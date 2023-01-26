@@ -16,7 +16,7 @@ announcements = Blueprint("announcements", __name__, static_folder=os.path.join(
 
 
 class CreateAnnouncementForm(Form):
-    title = StringField('Title', [validators.Length(min=1, max=200), validators.DataRequired()])
+    title = StringField('Title', [validators.Length(min=1, max=50), validators.DataRequired()])
     content = StringField('Content', [validators.Length(min=1, max=200), validators.DataRequired()])
     picture = FileField(label="Upload Image", validators=[FileAllowed(['jpg','png'])])
 
