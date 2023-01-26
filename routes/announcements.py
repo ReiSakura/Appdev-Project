@@ -113,5 +113,3 @@ def delete_announcement(id):
     db.close()
 
     return redirect(url_for('announcements.retrieve_announcements'))
-
-#hi
