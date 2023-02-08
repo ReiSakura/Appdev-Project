@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="static/css/update.css">
+
+<body>
+  <div class="main-container">
+    <div class="side-nav">
+      <a
+        href="{{url_for('product', products=products, image=image_link, form=cartform, username=username, profile='find_profile_pic(username)',total=total,gst=gst)}}">Home</a>
+      <a
+        href="{{url_for('cart', cart=cart, image=image_link, form=form, username=username, cform=cform, profile='find_profile_pic(username)',total=total,gst=gst)}}">Cart</a>
+      <a href="{{url_for('viewhistory', record=record, username=username, profile='find_profile_pic(username)')}}">Order
+        History</a>
+      <a href="{{url_for('feedback', form=form, username=username, profile='find_profile_pic(username)')}}">Feedback</a>
+      <a href="{{url_for('faq', form=form, username=username, profile='find_profile_pic(username)')}}">Ask Question</a>
+    </div>
+    <div class="form-container">
+      <h1>
+        Edit Profile {{username}}
+      </h1>
+      <form method="POST" enctype="multipart/form-data" class="update-form">
+        {{ form.hidden_tag() }} {{ form.csrf_token }}
+
+        <div class="labels">
+
+          {{form.image_file.label(class="label", style="margin-bottom:100px")}}
+          {{ form.username.label(class="label") }}
+          {{ form.email_address.label(class="label") }}
+          {{form.password1.label(class="label") }}
+          {{form.password2.label(class="label") }}
+          {{form.address.label(class="label") }}
+          {{form.postal_code.label(class="label") }}
+        </div>  
+        <div class="inputs">
+          <img class="rounded-circle account-img" src="{{ profile }}" alt="an image of a burger"
+            style="width: 120px; height: 120px" />
+          <br />
+          {{form.image_file() }}
+          <br />
+          {{form.username(class="input") }}
+          {{form.email_address(class="input") }}
+          {{form.password1(class="input") }}
+          {{form.password2(class="input") }}
+          {{form.address(class="input") }}
+          {{form.postal_code(class="input") }}
+          {{ form.submit(class="submit") }}
+        </div>
+        <br />
+      </form>
+    </div>
+  </div>
+</body>
