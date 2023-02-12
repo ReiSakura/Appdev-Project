@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<!--== Page Title Area Start ==-->
+<div id="page-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-title-content">
+                    <h1>Shop</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html" class="active">Shop</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== Page Title Area End ==-->
+
+<!--== Page Content Wrapper Start ==-->
+<div id="page-content-wrapper" class="p-9">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <!-- Shop Page Content Start -->
+            <div class="col-lg-9">
+                <div class="shop-page-content-wrap">
+                    <div class="products-settings-option d-block d-md-flex">
+                        <div class="product-cong-left d-flex align-items-center">
+                            <ul class="product-view d-flex align-items-center">
+                                <li class="current column-gird"><i class="fa fa-bars fa-rotate-90"></i></li>
+                                <li class="box-gird"><i class="fa fa-th"></i></li>
+                                <li class="list"><i class="fa fa-list-ul"></i></li>
+                            </ul>
+                            <span class="show-items">Items 1 - 9 of 17</span>
+                        </div>
+
+                        <div class="product-sort_by d-flex align-items-center mt-3 mt-md-0">
+                            <label for="sort">Sort By:</label>
+                            <select name="sort" id="sort">
+                                <option value="Position">Relevance</option>
+                                <option value="Name Ascen">Name, A to Z</option>
+                                <option value="Name Decen">Name, Z to A</option>
+                                <option value="Price Ascen">Price low to heigh</option>
+                                <option value="Price Decen">Price heigh to low</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="shop-page-products-wrap">
+                        <div class="products-wrapper">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">
+                                    {% for x in products %}
+                                        <!-- Single Product Item -->
+                                        <div class="single-product-item text-center">
+                                            <figure class="product-thumb">
+                                                <a href="single-product.html"><img src="/static/shop/{{ x['imagename']}}"
+                                                                                alt="Products" class="img-fluid"></a>
+                                            </figure>
+
+                                            <div class="product-details">
+                                                <h2><a href="single-product.html">{{ x['name'] }}</a></h2>
+                                                <div class="rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-half"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <span class="price">{{ x["price"]/100 }}</span>
+                                                <p class="products-desc">{{ x['description'] }}</p>
+                                                <a href="single-product.html" class="btn btn-add-to-cart">+ Add to Cart</a>
+                                            </div>
+
+                                            <div class="product-meta">
+                                                <button type="button" data-toggle="modal" data-target="#quickView">
+                                        <span data-toggle="tooltip" data-placement="left" title="Quick View"><i
+                                                class="fa fa-compress"></i></span>
+                                                </button>
+                                                <a href="#" data-toggle="tooltip" data-placement="left"
+                                                title="Add to Wishlist"><i
+                                                        class="fa fa-heart-o"></i></a>
+                                                <a href="#" data-toggle="tooltip" data-placement="left" title="Compare"><i
+                                                        class="fa fa-tags"></i></a>
+                                            </div>
+                                            <span class="product-bedge">New</span>
+                                        </div>
+                                        <!-- Single Product Item -->
+                                    {% endfor %}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="products-settings-option d-block d-md-flex">
+                        <nav class="page-pagination">
+                            <ul class="pagination">
+                                <li><a href="#" aria-label="Previous">&laquo;</a></li>
+                                <li><a class="current" href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#" aria-label="Next">&raquo;</a></li>
+                            </ul>
+                        </nav>
+
+                        <div class="product-per-page d-flex align-items-center mt-3 mt-md-0">
+                            <label for="show-per-page">Show Per Page</label>
+                            <select name="sort" id="show-per-page">
+                                <option value="9">9</option>
+                                <option value="15">15</option>
+                                <option value="21">21</option>
+                                <option value="6">27</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Shop Page Content End -->
+        </div>
+    </div>
+</div>
+<!--== Page Content Wrapper End ==-->
+{% endblock %}
