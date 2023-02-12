@@ -57,12 +57,12 @@
                                         <!-- Single Product Item -->
                                         <div class="single-product-item text-center">
                                             <figure class="product-thumb">
-                                                <a href="single-product.html"><img src="/static/shop/{{ x['imagename']}}"
+                                                <a href="/shop/product/{{ x['productID']}}"><img src="/static/shop/{{ x['imagename']}}"
                                                                                 alt="Products" class="img-fluid"></a>
                                             </figure>
 
                                             <div class="product-details">
-                                                <h2><a href="single-product.html">{{ x['name'] }}</a></h2>
+                                                <h2><a href="/shop/product/{{ x['productID']}}">{{ x['name'] }}</a></h2>
                                                 <div class="rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
@@ -70,7 +70,7 @@
                                                     <i class="fa fa-star-half"></i>
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
-                                                <span class="price">{{ x["price"]/100 }}</span>
+                                                <span class="price">${{ x["price"]/100 }}</span>
                                                 <p class="products-desc">{{ x['description'] }}</p>
                                                 <a href="single-product.html" class="btn btn-add-to-cart">+ Add to Cart</a>
                                             </div>

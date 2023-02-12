@@ -7,6 +7,7 @@ from wtforms import StringField, TextAreaField, validators, FileField, IntegerFi
 from wtforms.validators import InputRequired
 from werkzeug.utils import secure_filename
 from flask_uploads import configure_uploads, IMAGES, UploadSet
+from uuid import UUID
 import os
 import re
 
@@ -28,3 +29,21 @@ def get_shop():
     products = table.rows
     db.close()
     return render_template('shop.html', products=products)
+
+
+@shop.route('/product/<productid>', methods=['GET'])
+def item(productid):
+    db = Database()
+    print(productid)
+    try:
+        table = db.tables["inventory"]
+    except KeyError:
+        table = Table('imagename', 'name', 'category',
+                      'description', 'quantity', 'price', 'productID')
+    print(table.rows)
+    try:
+        # Should have only one item
+        result = table.finditem_eq(UUID(productid))[1][0]
+    except:
+        abort(404)
+    return render_template("displayProduct.html", product=result, )
