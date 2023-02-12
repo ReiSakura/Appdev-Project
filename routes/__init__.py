@@ -37,6 +37,7 @@ app.register_blueprint(announcements, url_prefix="/announcements")
 app.register_blueprint(feedback, url_prefix="/feedback")
 app.register_blueprint(review, url_prefix="/review")
 
+
 @app.route("/", methods=["GET"])
 def home():
     return render_template("home.html")
