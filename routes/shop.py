@@ -28,7 +28,7 @@ def get_shop():
                       'description', 'quantity', 'price', 'productID')
     products = table.rows
     db.close()
-    return render_template('shop.html', products=products, acc_type=session["user"]["accounttype"], accounttype=session["user"]["accounttype"])
+    return render_template('shop.html', products=products, total_numprod = len(products), acc_type=session["user"]["accounttype"], accounttype=session["user"]["accounttype"])
 
 
 @shop.route('/product/<productid>', methods=['GET'])
