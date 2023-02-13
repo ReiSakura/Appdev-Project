@@ -1844,7 +1844,6 @@ address strong, address b {
 /*== About Us Area Start ==*/
 .about-image-wrap {
     overflow: hidden;
-    background-color: #fafafa;
 }
 
 .about-image-wrap a:hover img {
