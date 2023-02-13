@@ -145,7 +145,7 @@ def adminregister():
     """
     Register Page
     """
-    form = RegisterForm()
+    form = AdminRegisterForm()
     if form.validate_on_submit():
         print("validated")
         db = Database()
@@ -176,7 +176,7 @@ def adminregister():
                            'last_entered': user.last_entered
                            }
         print("New User")
-        return redirect(url_for('home'))
+        return redirect('http://127.0.0.1:5000/inventory')
     return render_template("adminregister.html", form=form)
 
 
