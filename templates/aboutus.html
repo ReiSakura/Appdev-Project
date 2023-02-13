@@ -1,6 +1,159 @@
 {% extends "base.html" %}
 {% block content %}
 {% from "includes/_formHelper.html" import render_field %}
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <script src="https://kit.fontawesome.com/a53e002817.js" crossorigin="anonymous"></script>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f1f1f1;
+}
+
+.about {
+    background: url(khan.jpg) no-repeat left;
+    background-size: 55%;
+    background-color: #fdfdfd;
+    overflow: hidden;
+    padding: 100px 0;
+    z-index: 0;
+
+}
+
+.inner-section {
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #faf2f2;
+    padding: 140px;
+    box-shadow: 1px 1px 50px rgba(0,0,0,0.5);
+    border-radius: 10px;
+}
+
+.inner-section h1 {
+    margin-bottom: 30px;
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.text {
+    font-size: 18px;
+    color: #545454;
+    line-height: 30px;
+    text-align: justify;
+    margin-bottom: 40px;
+}
+.image-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40%;
+    height: 140%;
+    background-image: url(aboutus.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+   float: left;
+   width: 50%;
+   z-index: -1;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Montserrat:wght@100&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+body{
+  background: #eeeeee;
+}
+
+.testimonial-text{
+  width: 720px;
+  height: auto;
+  margin: 120px auto;
+}
+
+.item{
+  width: 220px;
+  margin: 0 10px;
+  float: left;
+  background:pinkdolphin;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.125);
+
+}
+
+.testimonial-text .item .img{
+  padding:20px;
+  margin: 0;
+
+}
+.testimonial-text .item. img img{
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.testimonial-text .item .name{
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.testimonial-text .item .content{
+  background: #fff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding: 20px;
+  text-align: center;
+}
+
+.testimonial-text .item .content h1{
+  margin-bottom: 10px;
+  color: #6ddfc0;
+}
+
+.testimonial-text .item .content p{
+  line-height: 20px;
+  margin-bottom: 15px;
+}
+
+.testimonial-text .item .content .stars img{
+  width: 20px;
+  float: left;
+}
+
+img{
+  width: 100px;
+  display: block;
+  margin: 0 auto
+}
+.stars{
+display: inline-block;
+}
+
+h2{
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+    </style>
+    </head>
 <!--== Page Title Area Start ==-->
 <div id="page-title-area">
     <div class="container">
@@ -18,5 +171,79 @@
     </div>
 </div>
 <!--== Page Title Area End ==-->
+
+<div class="about">
+    <div class="inner-section">
+        <div class="text-section">
+            <h1>We are Visionary</h1>
+            <p class="text">
+                For two decades, we have been proudly delivering on our commitment of 100% customer satisfaction with a focus on simplicity. Our products are freshly made with <u>LOVE</u>, crafted and baked with the utmost care and attention to detail. Not only are they inexpensive but stylish too; we ensure that the materials we use are the highest-quality and will last for many years to come. Our products are designed to bring a smile to your face and make your day brighter. We believe in providing our customers with the best possible experience, and our team is dedicated to providing you with the best customer service. Our wide range of products are designed to meet all your needs, whether you're looking for something to wear or eye-catching accessory for your home. We strive to make sure that every product we create is of impeccable quality, and our products are sure to bring you <u>JOY</u> for many years to come.
+            </p>
+        </div>
+        <div class="image-section">
+            <img src="../static/img/aboutmepageimg.png" alt="aboutus">
+        </div>
+    </div>
+</div>
+
+<h2>-------------What Customers Say-------------</h2>
+  <div class="wrapper">
+    <div class="testimonial-text">
+        <div class = "item">
+            <div class="img">
+              <img src ="../static/img/panjinghua.png" alt = "person_image">
+            </div>
+            <div class="name">Pan Jing Hua</div>
+            <div class = "content">
+              <h1><i class="fa-sharp fa-solid fa-quote-left"></i></h1>
+              <p>Delivery came in really fast, the product is really in good condition. Exactly the same as what is described. Love the styles, will buy it again!</p>
+
+              <div class = "stars">
+                <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+              </div>
+            </div>
+        </div>
+
+        <div class = "item">
+            <div class="img">
+              <img src ="../static/img/devon.png" alt = "person_image">
+            </div>
+            <div class="name">Segundo Devon Guiao Magpantay</div>
+            <div class = "content">
+              <h1><i class="fa-sharp fa-solid fa-quote-left"></i></h1>
+              <p>Wide Variety of choices, fast response from the seller. Was able to get a refund after i contacted. Great service!!</p>
+              <div class = "stars">
+                <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+                 <img src="../static/img/star.png" alt="stars">
+              </div>
+            </div>
+          </div>
+
+          <div class = "item">
+              <div class="img">
+                <img src ="../static/img/eliezer.png" alt = "person_image">
+              </div>
+              <div class="name">Eliezer Middleton</div>
+              <div class = "content">
+                <h1><i class="fa-sharp fa-solid fa-quote-left"></i></h1>
+                <p>Love the details handicrafts, many colors to choose from one design. Affordable and stylish! Its really good not gonna lie.</p>
+                <div class = "stars">
+                  <img src="../static/img/star.png" alt="stars">
+                   <img src="../static/img/star.png" alt="stars">
+                   <img src="../static/img/star.png" alt="stars">
+                   <img src="../static/img/star.png" alt="stars">
+                   <img src="../static/img/star.png" alt="stars">
+                </div>
+            </div>
+     </div>
+
+    </div>
+</div>
 
 {% endblock %}
