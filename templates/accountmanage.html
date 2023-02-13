@@ -1,0 +1,54 @@
+{% extends "adminBase.html" %}
+{% block title %}Account Management{% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+    {% endblock %}  
+     {% block content %}
+     {% from "includes/_formHelper.html" import render_field %}
+     <div class = "row">
+     <div class="accountmanageForm">
+            <div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Username/ID</th>
+                      <th>Role</th>
+                      <th>Address</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                </thead>
+                <tbody>
+                  {% for x in users_list %}
+                  <tr>
+                    <td>{{ x.username }}</td>
+                    <td>{{ x.accounttype }}</td>
+                    {% if x.address %}
+                      <td>{{ x.address }} </td>
+                    {% else %}
+                      <td>Nil</td>
+                    {% endif %}
+                    <td><a href="/account/update/{{ x.uuid}}" class="btn btn-success">Update</a></td>
+                    {% if x.username != "$admin"%}
+                      <td>
+                        <form action="/account/delete/{{ x.uuid}}"  method="POST">
+                          <input type="hidden" name="uuid" value="{{ x.uuid }}">
+                          <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Confirm delete?')">
+                        </form>
+                      </td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            
+                </table>
+              </div>
+    </div>
+    </div>
+    <div class="row align-items end">
+      <a href="/auth/adminregister">
+        
+      </a>
+    </div>
+    {% endblock %}

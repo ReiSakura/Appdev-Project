@@ -7,6 +7,7 @@ from routes.announcements import announcements
 from routes.feedback import feedback
 from routes.review import review
 from routes.shop import shop
+from routes.account import account
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from uuid import UUID
 import time
@@ -38,6 +39,7 @@ app.register_blueprint(announcements, url_prefix="/announcements")
 app.register_blueprint(feedback, url_prefix="/feedback")
 app.register_blueprint(review, url_prefix="/review")
 app.register_blueprint(shop, url_prefix="/shop")
+app.register_blueprint(account, url_prefix="/account")
 
 
 @app.route("/", methods=["GET"])

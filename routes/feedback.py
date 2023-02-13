@@ -17,24 +17,34 @@ feedback = Blueprint("feedback", __name__, static_folder=os.path.join(
 
 
 class CreateFeedbackForm(Form):
-    firstName = StringField('Name', [validators.Regexp('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$', message="Name must contain only alphabets"),validators.Length (min = 1, max = 150), validators.DataRequired()])
-    category = RadioField('Category', choices = [('G', "General"), ("P", "Product"), ("T", 'Treatment')], default= "G")
+    firstName = StringField('Name', [validators.Regexp(
+        '[a-zA-Z][a-zA-Z ]+[a-zA-Z]$', message="Name must contain only alphabets"), validators.Length(min=1, max=150), validators.DataRequired()])
+    category = RadioField('Category', choices=[
+                          ('G', "General"), ("P", "Product"), ("T", 'Treatment')], default="G")
     feedback = TextAreaField('Feedback', [validators.DataRequired()])
-    status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
-    email = EmailField('Email', [validators.Email(), validators.DataRequired()])
+    status = SelectField('Status(**FOR ADMIN USE**)',
+                         choices=[('P', 'PENDING'), ('C', 'CLOSED')], default='P')
+    email = EmailField(
+        'Email', [validators.Email(), validators.DataRequired()])
+
 
 class UpdateFeedbackForm(Form):
-    firstName = StringField('Name', [validators.Length (min = 1, max = 150), validators.Optional()])
-    category = RadioField('Category', choices = [('G', "General"), ("P", "Product"), ("T", 'Treatment')], default= "G")
+    firstName = StringField(
+        'Name', [validators.Length(min=1, max=150), validators.Optional()])
+    category = RadioField('Category', choices=[
+                          ('G', "General"), ("P", "Product"), ("T", 'Treatment')], default="G")
     feedback = TextAreaField('Feedback', [validators.Optional()])
-    status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= '')
+    status = SelectField('Status(**FOR ADMIN USE**)',
+                         choices=[('P', 'PENDING'), ('C', 'CLOSED')], default='')
     email = EmailField('Email', [validators.Email(), validators.Optional()])
 
+
 class FilterForm(Form):
-    filter = SelectField("Filter", choices= [("", ""), ("Pending", "Pending"), ("Closed", "Closed")], default="")
+    filter = SelectField("Filter", choices=[
+                         ("", ""), ("Pending", "Pending"), ("Closed", "Closed")], default="")
 
 
-@ feedback.route('/createFeedback', methods = ['GET', 'POST'])
+@ feedback.route('/createFeedback', methods=['GET', 'POST'])
 def createFeedback():
     createFeedbackForm = CreateFeedbackForm(request.form)
     if request.method == 'POST' and createFeedbackForm.validate():
@@ -46,13 +56,14 @@ def createFeedback():
         except:
             print("Error in retrieving Users from storage.db.")
 
-        feedback = Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data, createFeedbackForm.feedback.data, createFeedbackForm.status.data, date= date.today())
+        feedback = Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data,
+                            createFeedbackForm.feedback.data, createFeedbackForm.status.data, date=date.today())
         usersDict[feedback.get_userID()] = feedback
         db['Feedback'] = usersDict
         db.close()
 
         return redirect(url_for('feedback.retrieveFeedback'))
-    return render_template('createFeedback.html', form = createFeedbackForm)
+    return render_template('createFeedback.html', form=createFeedbackForm)
 
 
 @ feedback.route('/retrieveFeedback', methods=['GET', 'POST'])
@@ -68,7 +79,7 @@ def retrieveFeedback():
         feedback = feedbackDict.get(key)
         feedbackList.append(feedback)
 
-    if request.method  == "POST" and filterForm.validate():
+    if request.method == "POST" and filterForm.validate():
         filter_variable = filterForm.filter.data
         if filter_variable == "":
             return redirect(url_for('feedback.retrieveFeedback'))
@@ -77,10 +88,10 @@ def retrieveFeedback():
         elif filter_variable == "Closed":
             return redirect(url_for('feedback.filterClosed'))
 
-    return render_template('retrieveFeedback.html', feedbackList = feedbackList, count = len(feedbackList), form = filterForm)
+    return render_template('retrieveFeedback.html', feedbackList=feedbackList, count=len(feedbackList), form=filterForm)
 
 
-@ feedback.route('/updateFeedback/<uuid:id>/', methods = ['GET', 'POST'])
+@ feedback.route('/updateFeedback/<uuid:id>/', methods=['GET', 'POST'])
 def updateFeedback(id):
     updateFeedbackForm = UpdateFeedbackForm(request.form)
     if request.method == 'POST' and updateFeedbackForm.validate():
@@ -108,11 +119,11 @@ def updateFeedback(id):
         updateFeedbackForm.feedback.data = feedback.get_feedback()
         updateFeedbackForm.status.data = feedback.get_status()
 
-        return render_template('updateFeedback.html', form = updateFeedbackForm)
+        return render_template('updateFeedback.html', form=updateFeedbackForm)
 
 
-#closed route
-@ feedback.route('/filterClosed', methods =['GET', 'POST'])
+# closed route
+@ feedback.route('/filterClosed', methods=['GET', 'POST'])
 def filterClosed():
     filterForm = FilterForm(request.form)
     feedbackDict = {}
@@ -129,7 +140,7 @@ def filterClosed():
         if feedback.get_status() == "C":
             closedList.append(feedback)
 
-    if request.method  == "POST" and filterForm.validate():
+    if request.method == "POST" and filterForm.validate():
         filter_variable = filterForm.filter.data
         if filter_variable == "":
             return redirect(url_for('feedback.retrieveFeedback'))
@@ -138,10 +149,12 @@ def filterClosed():
         elif filter_variable == "Closed":
             return redirect(url_for('feedback.filterClosed'))
 
-    return render_template('filterClosed.html', feedbackList = feedbackList, count = len(feedbackList), form = filterForm, closedList = closedList, ccount = len(closedList))
+    return render_template('filterClosed.html', feedbackList=feedbackList, count=len(feedbackList), form=filterForm, closedList=closedList, ccount=len(closedList))
 
-#pending route
-@ feedback.route('/filterPending', methods = ['POST', 'GET'])
+# pending route
+
+
+@ feedback.route('/filterPending', methods=['POST', 'GET'])
 def filterPending():
     filterForm = FilterForm(request.form)
     feedbackDict = {}
@@ -158,7 +171,7 @@ def filterPending():
         if feedback.get_status() == "P":
             pendingList.append(feedback)
 
-    if request.method  == "POST" and filterForm.validate():
+    if request.method == "POST" and filterForm.validate():
         filter_variable = filterForm.filter.data
         if filter_variable == "":
             return redirect(url_for('feedback.retrieveFeedback'))
@@ -167,10 +180,10 @@ def filterPending():
         elif filter_variable == "Closed":
             return redirect(url_for('feedback.filterClosed'))
 
-    return render_template('filterPending.html', feedbackList = feedbackList, count = len(feedbackList), form = filterForm, pendingList = pendingList, pcount = len(pendingList))
+    return render_template('filterPending.html', feedbackList=feedbackList, count=len(feedbackList), form=filterForm, pendingList=pendingList, pcount=len(pendingList))
 
 
-#Statistics Breakdown
+# Statistics Breakdown
 @ feedback.route('/Stats')
 def Stats():
     db = shelve.open('feedstorage.db', 'r')
@@ -201,7 +214,7 @@ def Stats():
         datesplit = date.split('-')
         TotalList.append(count)
         if datesplit[1] == '01':
-           JanList.append(count)
+            JanList.append(count)
         elif datesplit[1] == '02':
             FebList.append(count)
         elif datesplit[1] == '03':
@@ -225,9 +238,8 @@ def Stats():
         elif datesplit[1]:
             DecList.append(count)
 
-    return render_template('Stats.html', TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
-                           count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))
-
+    return render_template('Stats.html', TotalList=TotalList, JanList=JanList, FebList=FebList, MarList=MarList, AprList=AprList, MayList=MayList, JunList=JunList, JulList=JulList, AugList=AugList, SepList=SepList, OctList=OctList, NovList=NovList, DecList=DecList,
+                           count=len(TotalList), jancount=len(JanList), febcount=len(FebList), marcount=len(MarList), aprcount=len(AprList), maycount=len(MayList), juncount=len(JunList), julcount=len(JulList), augcount=len(AugList), sepcount=len(SepList), octcount=len(OctList), novcount=len(NovList), deccount=len(DecList))
 
 
 @ feedback.route('/StatGraph')
@@ -238,7 +250,7 @@ def Stats1():
     countDict = db['Feedback']
     db.close()
 
-#overall
+# overall
     TotalList = []
     JanList = []
     FebList = []
@@ -253,7 +265,7 @@ def Stats1():
     NovList = []
     DecList = []
 
-#general
+# general
     JanGenList = []
     FebGenList = []
     MarGenList = []
@@ -267,7 +279,7 @@ def Stats1():
     NovGenList = []
     DecGenList = []
 
-#Products
+# Products
     JanProdList = []
     FebProdList = []
     MarProdList = []
@@ -281,7 +293,7 @@ def Stats1():
     NovProdList = []
     DecProdList = []
 
-#Treatment
+# Treatment
     JanTreatList = []
     FebTreatList = []
     MarTreatList = []
@@ -327,7 +339,7 @@ def Stats1():
         elif datesplit[1]:
             DecList.append(count)
 
-        #generalList
+        # generalList
         if datesplit[1] == '01' and cat == 'G':
             JanGenList.append(count)
         elif datesplit[1] == '02' and cat == 'G':
@@ -353,8 +365,7 @@ def Stats1():
         elif datesplit[1] == '12' and cat == 'G':
             DecGenList.append(count)
 
-
-        #ProductList
+        # ProductList
         if datesplit[1] == '01' and cat == 'P':
             JanProdList.append(count)
         elif datesplit[1] == '02' and cat == 'P':
@@ -380,8 +391,7 @@ def Stats1():
         elif datesplit[1] == '12' and cat == 'P':
             DecProdList.append(count)
 
-
-        #TreatmentList
+        # TreatmentList
         if datesplit[1] == '01' and cat == 'T':
             JanTreatList.append(count)
         elif datesplit[1] == '02' and cat == 'T':
@@ -407,16 +417,14 @@ def Stats1():
         elif datesplit[1] == '12' and cat == 'T':
             DecTreatList.append(count)
 
-    return render_template('StatGraph.html', title = 'Feedback - Statistics(Graph)', max = 20, labels = bar_labels, values = bar_values, TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
-                           count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList),
-                           JanGenList = JanGenList, FebGenList = FebGenList, MarGenList = MarGenList, AprGenList = AprGenList, MayGenList = MayGenList, JunGenList = JunGenList, JulGenList = JulGenList, AugGenList = AugGenList, SepGenList = SepGenList, OctGenList = OctGenList, NovGenList = NovGenList, DecGenList = DecGenList,
-                            jangencount = len(JanGenList), febgencount = len(FebGenList), margencount = len(MarGenList), aprgencount = len(AprGenList), maygencount = len(MayGenList), jungencount = len(JunGenList), julgencount = len(JulGenList), auggencount = len(AugGenList), sepgencount = len(SepGenList), octgencount = len(OctGenList), novgencount = len(NovGenList), decgencount = len(DecGenList),
-                           JanProdList = JanProdList, FebProdList = FebProdList, MarProdList = MarProdList, AprProdList = AprProdList, MayProdList = MayProdList, JunProdList = JunProdList, JulProdList = JulProdList, AugProdList = AugProdList, SepProdList = SepProdList, OctProdList = OctProdList, NovProdList = NovProdList, DecProdList = DecProdList,
-                            janprodcount = len(JanProdList), febprodcount = len(FebProdList), marprodcount = len(MarProdList), aprprodcount = len(AprProdList), mayprodcount = len(MayProdList), junprodcount = len(JunProdList), julprodcount = len(JulProdList), augprodcount = len(AugProdList), sepprodcount = len(SepProdList), octprodcount = len(OctProdList), novprodcount = len(NovProdList), decprodcount = len(DecProdList),
-                           JanTreatList = JanTreatList, FebTreatList = FebTreatList, MarTreatList = MarTreatList, AprTreatList = AprTreatList, MayTreatList = MayTreatList, JunTreatList = JunTreatList, JulTreatList = JulTreatList, AugTreatList = AugTreatList, SepTreatList = SepTreatList, OctTreatList = OctTreatList, NovTreatList = NovTreatList, DecTreatList = DecTreatList,
-                            jantreatcount = len(JanTreatList), febtreatcount = len(FebTreatList), martreatcount = len(MarTreatList), aprtreatcount = len(AprTreatList), maytreatcount = len(MayTreatList), juntreatcount = len(JunTreatList), jultreatcount = len(JulTreatList), augtreatcount = len(AugTreatList), septreatcount = len(SepTreatList), octtreatcount = len(OctTreatList), novtreatcount = len(NovTreatList), dectreatcount = len(DecTreatList))
-
-
+    return render_template('StatGraph.html', title='Feedback - Statistics(Graph)', max=20, labels=bar_labels, values=bar_values, TotalList=TotalList, JanList=JanList, FebList=FebList, MarList=MarList, AprList=AprList, MayList=MayList, JunList=JunList, JulList=JulList, AugList=AugList, SepList=SepList, OctList=OctList, NovList=NovList, DecList=DecList,
+                           count=len(TotalList), jancount=len(JanList), febcount=len(FebList), marcount=len(MarList), aprcount=len(AprList), maycount=len(MayList), juncount=len(JunList), julcount=len(JulList), augcount=len(AugList), sepcount=len(SepList), octcount=len(OctList), novcount=len(NovList), deccount=len(DecList),
+                           JanGenList=JanGenList, FebGenList=FebGenList, MarGenList=MarGenList, AprGenList=AprGenList, MayGenList=MayGenList, JunGenList=JunGenList, JulGenList=JulGenList, AugGenList=AugGenList, SepGenList=SepGenList, OctGenList=OctGenList, NovGenList=NovGenList, DecGenList=DecGenList,
+                           jangencount=len(JanGenList), febgencount=len(FebGenList), margencount=len(MarGenList), aprgencount=len(AprGenList), maygencount=len(MayGenList), jungencount=len(JunGenList), julgencount=len(JulGenList), auggencount=len(AugGenList), sepgencount=len(SepGenList), octgencount=len(OctGenList), novgencount=len(NovGenList), decgencount=len(DecGenList),
+                           JanProdList=JanProdList, FebProdList=FebProdList, MarProdList=MarProdList, AprProdList=AprProdList, MayProdList=MayProdList, JunProdList=JunProdList, JulProdList=JulProdList, AugProdList=AugProdList, SepProdList=SepProdList, OctProdList=OctProdList, NovProdList=NovProdList, DecProdList=DecProdList,
+                           janprodcount=len(JanProdList), febprodcount=len(FebProdList), marprodcount=len(MarProdList), aprprodcount=len(AprProdList), mayprodcount=len(MayProdList), junprodcount=len(JunProdList), julprodcount=len(JulProdList), augprodcount=len(AugProdList), sepprodcount=len(SepProdList), octprodcount=len(OctProdList), novprodcount=len(NovProdList), decprodcount=len(DecProdList),
+                           JanTreatList=JanTreatList, FebTreatList=FebTreatList, MarTreatList=MarTreatList, AprTreatList=AprTreatList, MayTreatList=MayTreatList, JunTreatList=JunTreatList, JulTreatList=JulTreatList, AugTreatList=AugTreatList, SepTreatList=SepTreatList, OctTreatList=OctTreatList, NovTreatList=NovTreatList, DecTreatList=DecTreatList,
+                           jantreatcount=len(JanTreatList), febtreatcount=len(FebTreatList), martreatcount=len(MarTreatList), aprtreatcount=len(AprTreatList), maytreatcount=len(MayTreatList), juntreatcount=len(JunTreatList), jultreatcount=len(JulTreatList), augtreatcount=len(AugTreatList), septreatcount=len(SepTreatList), octtreatcount=len(OctTreatList), novtreatcount=len(NovTreatList), dectreatcount=len(DecTreatList))
 
 
 labels = []
@@ -427,7 +435,7 @@ colors = [
     "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
 
 
-#Stat-Gen
+# Stat-Gen
 @ feedback.route('/StatGen')
 def CatGen():
     bar_labels = labels
@@ -479,11 +487,11 @@ def CatGen():
             NovGenList.append(count)
         elif datesplit[1] == '12' and cat == 'G':
             DecGenList.append(count)
-    return render_template('StatGen.html', title = 'Feedback - Category(General)', max = 20, labels = bar_labels, values = bar_values, JanGenList = JanGenList, FebGenList = FebGenList, MarGenList = MarGenList, AprGenList = AprGenList, MayGenList = MayGenList, JunGenList = JunGenList, JulGenList = JulGenList, AugGenList = AugGenList, SepGenList = SepGenList, OctGenList = OctGenList, NovGenList = NovGenList, DecGenList = DecGenList,
-                    jangencount = len(JanGenList), febgencount = len(FebGenList), margencount = len(MarGenList), aprgencount = len(AprGenList), maygencount = len(MayGenList), jungencount = len(JunGenList), julgencount = len(JulGenList), auggencount = len(AugGenList), sepgencount = len(SepGenList), octgencount = len(OctGenList), novgencount = len(NovGenList), decgencount = len(DecGenList))
+    return render_template('StatGen.html', title='Feedback - Category(General)', max=20, labels=bar_labels, values=bar_values, JanGenList=JanGenList, FebGenList=FebGenList, MarGenList=MarGenList, AprGenList=AprGenList, MayGenList=MayGenList, JunGenList=JunGenList, JulGenList=JulGenList, AugGenList=AugGenList, SepGenList=SepGenList, OctGenList=OctGenList, NovGenList=NovGenList, DecGenList=DecGenList,
+                           jangencount=len(JanGenList), febgencount=len(FebGenList), margencount=len(MarGenList), aprgencount=len(AprGenList), maygencount=len(MayGenList), jungencount=len(JunGenList), julgencount=len(JulGenList), auggencount=len(AugGenList), sepgencount=len(SepGenList), octgencount=len(OctGenList), novgencount=len(NovGenList), decgencount=len(DecGenList))
 
 
-#Stat-Prod
+# Stat-Prod
 @ feedback.route('/StatProd')
 def CatProd():
     bar_labels = labels
@@ -535,12 +543,11 @@ def CatProd():
             NovProdList.append(count)
         elif datesplit[1] == '12' and cat == 'P':
             DecProdList.append(count)
-    return render_template('StatProd.html', title = 'Feedback - Category(Products)', max = 20, labels = bar_labels, values = bar_values, JanProdList = JanProdList, FebProdList = FebProdList, MarProdList = MarProdList, AprProdList = AprProdList, MayProdList = MayProdList, JunProdList = JunProdList, JulProdList = JulProdList, AugProdList = AugProdList, SepProdList = SepProdList, OctProdList = OctProdList, NovProdList = NovProdList, DecProdList = DecProdList,
-                    janprodcount = len(JanProdList), febprodcount = len(FebProdList), marprodcount = len(MarProdList), aprprodcount = len(AprProdList), mayprodcount = len(MayProdList), junprodcount = len(JunProdList), julprodcount = len(JulProdList), augprodcount = len(AugProdList), sepprodcount = len(SepProdList), octprodcount = len(OctProdList), novprodcount = len(NovProdList), decprodcount = len(DecProdList))
+    return render_template('StatProd.html', title='Feedback - Category(Products)', max=20, labels=bar_labels, values=bar_values, JanProdList=JanProdList, FebProdList=FebProdList, MarProdList=MarProdList, AprProdList=AprProdList, MayProdList=MayProdList, JunProdList=JunProdList, JulProdList=JulProdList, AugProdList=AugProdList, SepProdList=SepProdList, OctProdList=OctProdList, NovProdList=NovProdList, DecProdList=DecProdList,
+                           janprodcount=len(JanProdList), febprodcount=len(FebProdList), marprodcount=len(MarProdList), aprprodcount=len(AprProdList), mayprodcount=len(MayProdList), junprodcount=len(JunProdList), julprodcount=len(JulProdList), augprodcount=len(AugProdList), sepprodcount=len(SepProdList), octprodcount=len(OctProdList), novprodcount=len(NovProdList), decprodcount=len(DecProdList))
 
 
-
-#Stat-Treat
+# Stat-Treat
 @ feedback.route('/StatTreat')
 def CatTreat():
     bar_labels = labels
@@ -592,8 +599,8 @@ def CatTreat():
             NovTreatList.append(count)
         elif datesplit[1] == '12' and cat == 'T':
             DecTreatList.append(count)
-    return render_template('StatTreat.html', title = 'Feedback - Category(Treatment)', max = 20, labels = bar_labels, values = bar_values, JanTreatList = JanTreatList, FebTreatList = FebTreatList, MarTreatList = MarTreatList, AprTreatList = AprTreatList, MayTreatList = MayTreatList, JunTreatList = JunTreatList, JulTreatList = JulTreatList, AugTreatList = AugTreatList, SepTreatList = SepTreatList, OctTreatList = OctTreatList, NovTreatList = NovTreatList, DecTreatList = DecTreatList,
-                    jantreatcount = len(JanTreatList), febtreatcount = len(FebTreatList), martreatcount = len(MarTreatList), aprtreatcount = len(AprTreatList), maytreatcount = len(MayTreatList), juntreatcount = len(JunTreatList), jultreatcount = len(JulTreatList), augtreatcount = len(AugTreatList), septreatcount = len(SepTreatList), octtreatcount = len(OctTreatList), novtreatcount = len(NovTreatList), dectreatcount = len(DecTreatList))
+    return render_template('StatTreat.html', title='Feedback - Category(Treatment)', max=20, labels=bar_labels, values=bar_values, JanTreatList=JanTreatList, FebTreatList=FebTreatList, MarTreatList=MarTreatList, AprTreatList=AprTreatList, MayTreatList=MayTreatList, JunTreatList=JunTreatList, JulTreatList=JulTreatList, AugTreatList=AugTreatList, SepTreatList=SepTreatList, OctTreatList=OctTreatList, NovTreatList=NovTreatList, DecTreatList=DecTreatList,
+                           jantreatcount=len(JanTreatList), febtreatcount=len(FebTreatList), martreatcount=len(MarTreatList), aprtreatcount=len(AprTreatList), maytreatcount=len(MayTreatList), juntreatcount=len(JunTreatList), jultreatcount=len(JulTreatList), augtreatcount=len(AugTreatList), septreatcount=len(SepTreatList), octtreatcount=len(OctTreatList), novtreatcount=len(NovTreatList), dectreatcount=len(DecTreatList))
 
 
 @ feedback.route('/deleteFeedback/<uuid:id>', methods=['POST'])

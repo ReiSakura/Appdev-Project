@@ -1,8 +1,8 @@
 import uuid
-from flask import Blueprint, render_template, request, redirect, url_for, abort, flash, send_from_directory, escape
+from flask import Blueprint, render_template, request, redirect, url_for, abort, flash, send_from_directory, escape, session
 from data.database import Database
 from data.table import Table
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, TextAreaField, validators, FileField, IntegerField, SelectField, SubmitField
 from wtforms.validators import InputRequired
 from werkzeug.utils import secure_filename
@@ -28,7 +28,7 @@ def get_shop():
                       'description', 'quantity', 'price', 'productID')
     products = table.rows
     db.close()
-    return render_template('shop.html', products=products)
+    return render_template('shop.html', products=products, acc_type=session["user"]["accounttype"], accounttype=session["user"]["accounttype"])
 
 
 @shop.route('/product/<productid>', methods=['GET'])
@@ -46,4 +46,4 @@ def item(productid):
         result = table.finditem_eq(UUID(productid))[1][0]
     except:
         abort(404)
-    return render_template("displayProduct.html", product=result, )
+    return render_template("displayProduct.html", product=result, acc_type=session["user"]["accounttype"], accounttype=session["user"]["accounttype"])

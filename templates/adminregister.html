@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+{% block css %}
+        <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock %}  
+
+     {% block content %}
+     {% from "includes/_formHelper.html" import render_field %}
+     <div class="signup-form">
+
+        <form action="" enctype="multipart/form-data" method="POST">
+            {{ form.csrf_token }}
+            <h2 class="text-center">Register</h2>
+            <p class="hint-text text-center">Create your account.</p>
+            <div class="form-group">
+                <div class = 'col col-md-6' style = "margin:auto;">
+                    {{ render_field(form.name, class="form-control") }}    	
+                </div>
+            </div>
+            <div class="form-group">
+                <div class = 'col col-md-6' style = "margin:auto;">
+                    {{ render_field(form.email, class="form-control") }}    	
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                <div class = 'col col-md-6' style = "margin:auto;">
+                    {{ render_field(form.username, class="form-control") }}    	
+                </div>
+            </div>
+            <div class="form-group">
+                <div class = 'col col-md-6' style = "margin:auto;">
+                    {{ render_field(form.password, class="form-control") }}
+                </div>
+            </div>    
+            <div class = 'col col-md-6' style = "margin:auto;">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+            </div>
+        </form>
+        </div>
+     {% endblock %}  
