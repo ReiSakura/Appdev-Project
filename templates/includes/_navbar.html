@@ -27,9 +27,11 @@
                                     </ul>
                                 </ul>
                             </li>
-                            <li><a href="">Announcements</a>
+                            <li><a href="/Announcements">Announcements</a>
                             </li>
-                            <li><a href="">Contact Us</a></li>
+                            <li><a href="/aboutus">About Us</a>
+                            </li>
+                            <li><a href="/contactus">Contact Us</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -49,6 +51,7 @@
                                     <dt>My Account</dt>
                                     <dd><a href="#">Profile</a></dd>
                                     {% endif %}
+                                    <dd><a href="http://127.0.0.1:5000/account/admin/register">Staff</a></dd>
                                     {% if session["user"]["accounttype"] == "customer" %}
                                         <dd><a href="http://127.0.0.1:5000/account/logout">Logout</a></dd>
                                     {% else %}
@@ -59,7 +62,7 @@
                             </div>
                         </li>
                         <li class="shop-cart"><a href="#"><i class="fa fa-shopping-bag"></i> <span
-                                class="count">3</span></a>
+                                class="count"></span></a>
                             <div class="mini-cart">
                                 {% if session["user"]["accounttype"] == "customer" %}
                                 <div class="mini-cart-body">
