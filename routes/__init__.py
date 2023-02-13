@@ -41,9 +41,6 @@ app.register_blueprint(review, url_prefix="/review")
 app.register_blueprint(shop, url_prefix="/shop")
 app.register_blueprint(account, url_prefix="/account")
 
-admin = ["accountmanage", "contact admin",
-         "auth.adminregister", "dashboard", "inventory"]
-
 
 @app.before_request
 def authorizer():
@@ -58,11 +55,6 @@ def authorizer():
     else:
         if (session["user"]["last_entered"] + 24 * 60 * 60 < time.time()):
             session["user"]["last_entered"] = time.time()
-    if (request.endpoint):
-        for x in admin:
-            if (x in request.endpoint):
-                if (session["user"]["accounttype"] != "admin"):
-                    abort(403)
 
 
 @app.route("/", methods=["GET"])
