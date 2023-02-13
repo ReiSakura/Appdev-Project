@@ -41,6 +41,9 @@ app.register_blueprint(review, url_prefix="/review")
 app.register_blueprint(shop, url_prefix="/shop")
 app.register_blueprint(account, url_prefix="/account")
 
+admin = ["accountmanage", "contact admin",
+         "auth.adminregister", "dashboard", "inventory"]
+
 
 @app.before_request
 def authorizer():
