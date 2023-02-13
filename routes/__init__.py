@@ -42,6 +42,26 @@ app.register_blueprint(shop, url_prefix="/shop")
 app.register_blueprint(account, url_prefix="/account")
 
 
+@app.before_request
+def authorizer():
+    if (not ("user" in session)):
+        print("New User")
+        session["user"] = {'username': 'guest',
+                           'password': 'guest',
+                           'uuid': uuid.uuid4(),
+                           'accounttype': 'guest',
+                           'last_entered': time.time(),
+                           }
+    else:
+        if (session["user"]["last_entered"] + 24 * 60 * 60 < time.time()):
+            session["user"]["last_entered"] = time.time()
+    if (request.endpoint):
+        for x in admin:
+            if (x in request.endpoint):
+                if (session["user"]["accounttype"] != "admin"):
+                    abort(403)
+
+
 @app.route("/", methods=["GET"])
 def home():
-    return render_template("home.html", acc_type=session["user"]["accounttype"], accounttype=session["user"]["accounttype"])
+    return render_template("home.html")
