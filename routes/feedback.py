@@ -62,7 +62,6 @@ def createFeedback():
         db['Feedback'] = usersDict
         db.close()
 
-        return redirect(url_for('feedback.retrieveFeedback'))
     return render_template('createFeedback.html', form=createFeedbackForm)
 
 
