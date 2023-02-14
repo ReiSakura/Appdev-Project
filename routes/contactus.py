@@ -46,6 +46,15 @@ def createFeedback():
         db['Feedback'] = usersDict
         db.close()
 
+        return redirect(url_for('contactus.get_submission'))
     return render_template('contactUs.html', form=createFeedbackForm)
+
+@contactus.route('/submission', methods=['GET', 'POST'])
+def get_submission():
+    '''
+    SUbmission page
+    '''
+
+    return render_template('submission.html')
 
 
