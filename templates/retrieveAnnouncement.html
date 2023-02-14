@@ -28,7 +28,7 @@
     <tbody>
     {% for announcement in announcements_list %}
       <tr>
-        <td><img src="../static/shop/{{ value }}" style="width: 100px; height: 100px;"></td>
+        <td><img src="../static/shop/{{ announcement.get_content() }}" style="width: 100px; height: 100px;"></td>
         <td>{{ announcement.get_announcement_id() }}</td>
         <td>{{ announcement.get_title() }}</td>
         <td>{{ announcement.get_content() }}</td>

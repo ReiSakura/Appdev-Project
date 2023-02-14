@@ -9,6 +9,7 @@ from routes.review import review
 from routes.shop import shop
 from routes.account import account
 from routes.aboutus import aboutus
+from routes.userreview import userreview
 from routes.userannouncements import userannouncements
 from routes.contactus import contactus
 from flask_uploads import configure_uploads, IMAGES, UploadSet
@@ -46,6 +47,7 @@ app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(aboutus, url_prefix="/aboutus")
 app.register_blueprint(userannouncements, url_prefix="/Announcements")
 app.register_blueprint(contactus, url_prefix="/contactus")
+app.register_blueprint(userreview, url_prefix="/review")
 
 admin = ["accountmanage", "contact admin",
          "auth.adminregister", "dashboard", "inventory"]
