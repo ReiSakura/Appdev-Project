@@ -12,6 +12,7 @@ from routes.aboutus import aboutus
 from routes.userreview import userreview
 from routes.userannouncements import userannouncements
 from routes.contactus import contactus
+from routes.accountmanage import accountmanage
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from uuid import UUID
 import time
@@ -48,9 +49,10 @@ app.register_blueprint(aboutus, url_prefix="/aboutus")
 app.register_blueprint(userannouncements, url_prefix="/Announcements")
 app.register_blueprint(contactus, url_prefix="/contactus")
 app.register_blueprint(userreview, url_prefix="/review")
+app.register_blueprint(accountmanage, url_prefix="/accountmanage")
 
-admin = ["accountmanage", "contact admin",
-         "auth.adminregister", "dashboard", "inventory"]
+admin = ["accountmanage", "feedback",
+         "auth.adminregister", "announcements", "inventory", "review"]
 
 
 @app.before_request
