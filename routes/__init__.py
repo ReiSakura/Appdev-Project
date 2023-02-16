@@ -10,7 +10,7 @@ from routes.shop import shop
 from routes.account import account
 from routes.aboutus import aboutus
 from routes.userreview import userreview
-from routes.userannouncements import userannouncements
+from routes.user_announce import user_announce
 from routes.contactus import contactus
 from routes.accountmanage import accountmanage
 from routes.submission import submission
@@ -47,7 +47,7 @@ app.register_blueprint(review, url_prefix="/review")
 app.register_blueprint(shop, url_prefix="/shop")
 app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(aboutus, url_prefix="/aboutus")
-app.register_blueprint(userannouncements, url_prefix="/Announcements")
+app.register_blueprint(user_announce, url_prefix="/userannouncements")
 app.register_blueprint(contactus, url_prefix="/contactus")
 app.register_blueprint(userreview, url_prefix="/review")
 app.register_blueprint(accountmanage, url_prefix="/accountmanage")

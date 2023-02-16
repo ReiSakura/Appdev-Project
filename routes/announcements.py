@@ -16,20 +16,23 @@ announcements = Blueprint("announcements", __name__, static_folder=os.path.join(
 
 
 class CreateAnnouncementForm(Form):
-    title = StringField('Title', [validators.Length(min=1, max=50), validators.DataRequired()])
-    content = StringField('Content', [validators.Length(min=1, max=200), validators.DataRequired()])
-    picture = FileField(label="Upload Image", validators=[FileAllowed(['jpg','png'])])
+    title = StringField('Title', [validators.Length(
+        min=1, max=50), validators.DataRequired()])
+    content = StringField('Content', [validators.Length(
+        min=1, max=200), validators.DataRequired()])
+    picture = FileField(label="Upload Image", validators=[
+                        FileAllowed(['jpg', 'png'])])
 
 
-@ announcements.route('/createAnnouncement', methods=['GET', 'POST'])
+@announcements.route('/createAnnouncement', methods=['GET', 'POST'])
 def create_announcements():
     '''
     Add announcements page
     '''
-    #Create the form.
+    # Create the form.
     create_announcement_form = CreateAnnouncementForm(request.form)
 
-    #Validations.
+    # Validations.
     if request.method == 'POST' and create_announcement_form.validate():
         announcements_dict = {}
         db = shelve.open('announcement.db', 'c')
@@ -39,7 +42,8 @@ def create_announcements():
         except:
             print("Error in retrieving Announcements from announcement.db.")
 
-        announcement = Announcement(create_announcement_form.title.data, create_announcement_form.content.data)
+        announcement = Announcement(
+            create_announcement_form.title.data, create_announcement_form.content.data)
         announcements_dict[announcement.get_announcement_id()] = announcement
 
         print(announcements_dict)
@@ -50,7 +54,8 @@ def create_announcements():
         return redirect(url_for('announcements.retrieve_announcements'))
     return render_template('createAnnouncement.html', form=create_announcement_form)
 
-@ announcements.route('/retrieveAnnouncement')
+
+@announcements.route('/')
 def retrieve_announcements():
     '''
     Retrieve data in announcements
@@ -67,7 +72,8 @@ def retrieve_announcements():
 
     return render_template('retrieveAnnouncement.html', count=len(announcements_list), announcements_list=announcements_list)
 
-@ announcements.route('/edit/<uuid:id>/', methods=['GET', 'POST'])
+
+@announcements.route('/edit/<uuid:id>/', methods=['GET', 'POST'])
 def update_announcement(id):
     '''
     Edit page
@@ -98,7 +104,8 @@ def update_announcement(id):
 
         return render_template('updateAnnouncement.html', form=update_announcement_form)
 
-@ announcements.route('/<uuid:id>', methods=['POST'])
+
+@announcements.route('/<uuid:id>', methods=['POST'])
 def delete_announcement(id):
     '''
     Delete data in announcement based on id
