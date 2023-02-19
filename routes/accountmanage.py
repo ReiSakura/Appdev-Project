@@ -46,6 +46,7 @@ class AdminRegisterForm(FlaskForm):
         'Username', [validators.Length(min=1, max=25), AlphaNumeric()])
     password = PasswordField('Password', [validators.Length(min=8, max=30)])
 
+
 @accountmanage.route('/', methods=["GET", "POST"])
 def getaccount():
     """
@@ -113,7 +114,8 @@ def delete(uuid):
     db.close()
 
     # print(results)
-    return redirect(url_for('account.getaccount'))
+    return redirect(url_for('accountmanage.getaccount'))
+
 
 @accountmanage.route('/logout', methods=["GET", "POST"])
 def logout():

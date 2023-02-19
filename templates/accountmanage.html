@@ -29,10 +29,10 @@
                     {% else %}
                       <td>Nil</td>
                     {% endif %}
-                    <td><a href="/account/update/{{ x.uuid}}" class="btn btn-success">Update</a></td>
+                    <td><a href="/accountmanage/update/{{ x.uuid}}" class="btn btn-success">Update</a></td>
                     {% if x.username != "$admin"%}
                       <td>
-                        <form action="/account/delete/{{ x.uuid}}"  method="POST">
+                        <form action="/accountmanage/delete/{{ x.uuid}}"  method="POST">
                           <input type="hidden" name="uuid" value="{{ x.uuid }}">
                           <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Confirm delete?')">
                         </form>
